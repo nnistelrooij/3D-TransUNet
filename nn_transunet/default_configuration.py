@@ -70,6 +70,17 @@ def get_default_configuration(network, task, network_trainer, plans_identifier=d
     if network_trainer ==  'nnUNetTrainerV2BraTSRegions_DA4_BN_BD_largeUnet_Groupnorm':
         from nnunet.training.network_training.competitions_with_custom_Trainers.BraTS2020.nnUNetTrainerV2BraTSRegions_moreDA import nnUNetTrainerV2BraTSRegions_DA4_BN_BD_largeUnet_Groupnorm
         network_trainer_dict['nnUNetTrainerV2BraTSRegions_DA4_BN_BD_largeUnet_Groupnorm'] = nnUNetTrainerV2BraTSRegions_DA4_BN_BD_largeUnet_Groupnorm
+    elif network_trainer == 'nnUNetTrainerV2_OnlyMirror01':        
+        class nnUNetTrainerV2_OnlyMirror01(nnUNetTrainerV2_DDP):
+    
+            def setup_DA_params(self):
+                super().setup_DA_params()
+                self.mirror_axes = (0, 1)
+                self.data_aug_params["mirror_axes"] = (0, 1)
+                self.data_aug_params["do_mirror"] = True
+                
+        network_trainer_dict['nnUNetTrainerV2_OnlyMirror01'] = nnUNetTrainerV2_OnlyMirror01
+
     
     trainer_class = network_trainer_dict[network_trainer]
     # trainer_class = nnUNetTrainer
