@@ -176,7 +176,7 @@ if cfg['model'].startswith('Generic'):
         from nn_transunet.networks.transunet3d_model import Generic_TransUNet_max_ppbp
         net = Generic_TransUNet_max_ppbp(num_input_channels, base_num_features, num_classes, len(pool_op_kernel_sizes), conv_per_stage, 2,
                    nn.Conv3d, nn.InstanceNorm3d, norm_op_kwargs, nn.Dropout3d,
-                   dropout_op_kwargs, net_nonlin, net_nonlin_kwargs, not args.disable_ds, False, lambda x: x,
+                   dropout_op_kwargs, net_nonlin, net_nonlin_kwargs, False, False, lambda x: x,
                    InitWeights_He(1e-2), pool_op_kernel_sizes, conv_kernel_sizes, False, True, 
                     convolutional_upsampling= True,    
                     patch_size=patch_size, **model_params)
@@ -672,13 +672,7 @@ print(args.save_folder)
 os.makedirs(args.save_folder, exist_ok=True)
 
 rawf = sorted(glob(raw_data_dir+"/*.nii.gz"))
-if val_keys is not None:
-    valid_rawf = [i for i in rawf if os.path.basename(i).replace('.nii.gz', '').replace('_0000', '') in val_keys]
-else:
-    valid_rawf = rawf
-
-
-for i, rawf in enumerate(tqdm(valid_rawf)):
+for i, rawf in enumerate(tqdm(rawf)):
     if task.find('500') != -1 or  task.find('005') != -1  or task.find('001')  != -1:
         Inference3D_multiphase(rawf, args.save_folder)
     else:
