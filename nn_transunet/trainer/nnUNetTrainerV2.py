@@ -420,10 +420,10 @@ class nnUNetTrainerV2(nnUNetTrainer):
         val_keys.sort()
         self.dataset_tr = OrderedDict()
         for i in tr_keys:
-            self.dataset_tr[i] = self.dataset[i]
+            self.dataset_tr[i] = self.dataset[f'{i}_0000']
         self.dataset_val = OrderedDict()
         for i in val_keys:
-            self.dataset_val[i] = self.dataset[i]
+            self.dataset_val[i] = self.dataset[f'{i}_0000']
 
     def setup_DA_params(self):
         """
