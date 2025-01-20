@@ -247,9 +247,9 @@ def _get_hdfs_command(command):
 
 def check_call_hdfs_command(command):
     """check call hdfs command"""
-    import shlex
-    hdfs_command = _get_hdfs_command(command)
-    subprocess.check_call(shlex.split(hdfs_command))
+    # import shlex
+    # hdfs_command = _get_hdfs_command(command)
+    # subprocess.check_call(shlex.split(hdfs_command))
 
 
 def download_from_hdfs(src_path, dst_path, raise_exception=False):
